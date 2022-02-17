@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import {
   BrowserRouter,
   Route,
-  Link,
 } from "react-router-dom/cjs/react-router-dom.min";
-import Posts from "./components/Posts";
-import Register from "./components/Register";
-import Home from "./components/Home";
-import Profile from "./components/Profile";
-import Login from "./components/Login";
-import Navbar from "./components/Navbar";
+import Posts from "./Posts";
+import Register from "./Register";
+import Home from "./Home";
+import Profile from "./Profile";
+import Login from "./Login";
+import Navbar from "./Navbar";
+import CreatePost from "./CreatePost";
+import PostDetails from "./PostDetails";
 
 export const API =
   "https://strangers-things.herokuapp.com/api/2110-FTB-ET-WEB-PT";
@@ -18,36 +19,40 @@ const App = () => {
   const [posts, setPosts] = useState([]);
   const [token, setToken] = useState("");
   const [user, setUser] = useState({});
+  const [error, setError] = useState("");
 
   async function fetchPosts() {
     const resp = await fetch(`${API}/posts`);
     const info = await resp.json();
     setPosts(info.data.posts);
   }
-  console.log(token, user, posts);
+  // console.log(token, user, posts);
   const fetchUser = async () => {
-    const lsToken = localStorage.getitem("token");
+    const lsToken = localStorage.getItem("token");
     if (lsToken) {
       setToken(lsToken);
-    }
-    const resp = await fetch(`${API}/users/me`, {
-      headers: {
-        Authorization: `Bearer ${lsToken}`,
-      },
-    });
-    const info = await resp.json();
-    console.log(info);
-    if (info.success) {
-      setUser(info.data);
+      const resp = await fetch(`${API}/users/me`, {
+        headers: {
+          Authorization: `Bearer ${lsToken}`,
+        },
+      });
+      const info = await resp.json();
+
+      if (info.error) {
+        return setError(info.error.message);
+      } else {
+        setUser(info.data);
+      }
     }
   };
 
   useEffect(() => {
     fetchUser();
     fetchPosts();
-  }, []);
+  }, [token]);
   return (
-    <BrowserRouter>
+    <>
+      <Navbar setToken={setToken} setUser={setUser} />
       <div id="container">
         <div id="main-section">
           <Route exact path="/">
@@ -55,23 +60,31 @@ const App = () => {
           </Route>
 
           <Route exact path="/Posts">
-            <Posts />
+            <Posts posts={posts} />
           </Route>
 
           <Route exact path="/Register">
             <Register setToken={setToken} />
           </Route>
 
+          <Route exact path="/CreatePost">
+            <CreatePost token={token} fetchPosts={fetchPosts} />
+          </Route>
+
           <Route exact path="/Profile">
-            <Profile />
+            <Profile fetchUser={fetchUser} setToken={setToken} />
+          </Route>
+
+          <Route exact path="/PostDetails">
+            <PostDetails />
           </Route>
 
           <Route exact path="/Login">
-            <Login />
+            <Login setToken={setToken} />
           </Route>
         </div>
       </div>
-    </BrowserRouter>
+    </>
   );
 };
 

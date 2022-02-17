@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { API } from "../app";
+import { API } from "./app";
 
-const Register = () => {
+const Register = (props) => {
   const setToken = props.setToken;
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -31,9 +31,9 @@ const Register = () => {
       }),
     });
     const info = await (await resp).json();
-    console.log(info);
+    // console.log(info);
     if (info.error) {
-      setError(info.error.message);
+      return setError(info.error.message);
     }
     setToken(info.data.token);
     localStorage.setItem("token", info.data.token);
@@ -43,7 +43,7 @@ const Register = () => {
   return (
     <>
       <h1>Register</h1>;
-      <form onSubmit={handleRegister}>
+      <form onSubmit={(e) => handleRegister(e)}>
         <input
           placeholder="Enter Username"
           value={username}
@@ -59,6 +59,7 @@ const Register = () => {
           value={confirm}
           onChange={(e) => setConfirm(e.target.value)}
         />
+        <button type="submit">submit</button>
       </form>
     </>
   );
