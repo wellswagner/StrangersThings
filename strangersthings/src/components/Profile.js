@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import reactRouterDom from "react-router-dom";
 import { API } from "./app";
 import { Link } from "react-router-dom";
-import Messages from "./Messages";
+import Messages from "./CreateMessage";
 const Profile = ({ user }) => {
   const [posts, setPosts] = useState([]);
 
   // useEffect(()=> {
   //   setPosts(user.posts);
   // }, [user])
-  
 
   return (
     <>

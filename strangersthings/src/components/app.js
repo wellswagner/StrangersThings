@@ -18,6 +18,7 @@ export const API =
 const App = () => {
   const [posts, setPosts] = useState([]);
   const [token, setToken] = useState("");
+  const lsToken = localStorage.getItem("token");
   const [user, setUser] = useState({});
   const [error, setError] = useState("");
 
@@ -28,7 +29,6 @@ const App = () => {
   }
   // console.log(token, user, posts);
   const fetchUser = async () => {
-    const lsToken = localStorage.getItem("token");
     if (lsToken) {
       setToken(lsToken);
       const resp = await fetch(`${API}/users/me`, {
@@ -65,6 +65,13 @@ const App = () => {
 
           <Route exact path="/Register">
             <Register setToken={setToken} />
+          </Route>
+          <Route exact path="/posts/:id">
+            <PostDetails
+              posts={posts}
+              lsToken={lsToken}
+              fetchPosts={fetchPosts}
+            />
           </Route>
 
           <Route exact path="/CreatePost">
