@@ -2,7 +2,7 @@ import { useState } from "react";
 import { API } from "./app";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-const CreatePost = ({ token }) => {
+const CreatePost = ({ fetchPosts }) => {
   const [saleItem, setSaleItem] = useState("");
   const [itemDesc, setItemDesc] = useState("");
   const [itemPrice, setItemPrice] = useState("");
@@ -12,25 +12,32 @@ const CreatePost = ({ token }) => {
 
   const lsToken = localStorage.getItem("token");
   const postHandler = async (e) => {
-    e.preventDefault();
-    console.log(lsToken);
-    if (lsToken) {
-      const resp = await fetch(`${API})/posts`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          post: {
-            title: saleItem,
-            description: itemDesc,
-            Price: itemPrice,
+    try {
+      e.preventDefault();
+      console.log(lsToken);
+      if (lsToken) {
+        console.log("is it even hittin that stuff?");
+        const resp = await fetch(`${API})/posts`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${lsToken}`,
           },
-        }),
-      });
+          body: JSON.stringify({
+            post: {
+              saleItem: saleItem,
+              itemDesc: itemDesc,
+              itemPrice: itemPrice,
+              itemLocation: itemLocation,
+            },
+          }),
+        }).then(res => res.json())
+      }
+      fetchPosts();
+      history.push("./Posts");
+    } catch (error) {
+      console.error(error);
     }
-    // history.push("./Posts");
   };
   return (
     <>

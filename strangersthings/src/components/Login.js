@@ -16,6 +16,7 @@ const Login = (props) => {
     setError("");
     if (!password || !username) {
       setError("Invalid username or password");
+      console.log("hello");
     }
 
     const resp = fetch(`${API}/users/login`, {

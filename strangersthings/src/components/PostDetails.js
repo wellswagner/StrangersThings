@@ -52,11 +52,11 @@ const PostDetails = ({ posts, lsToken, fetchPosts }) => {
           <div>
             <div id="post-results">
               <h3 id="post-title">{post.title}</h3>
-              <div id="post-info">Description: {post.description}</div>
-              <div id="post-info">Price: {post.price}</div>
-              <div id="post-info">Posted by: {post.author.username}</div>
-              <div id="post-info">Location: {post.location} </div>
-              <Link id="send-message" to={`message/${post._id}`}>
+              <div>Description: {post.description}</div>
+              <div>Price: {post.price}</div>
+              <div>Posted by: {post.author.username}</div>
+              <div>Location: {post.location} </div>
+              <Link to={`message/${post._id}`}>
                 <button>Send Message</button>
               </Link>
             </div>
