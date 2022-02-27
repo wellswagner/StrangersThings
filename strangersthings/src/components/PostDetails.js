@@ -28,30 +28,26 @@ const PostDetails = ({ posts, lsToken, fetchPosts }) => {
 
   return (
     <>
-      <div id="post-results-box">
+      <div>
         {post && post.isAuthor ? (
-          <div id="selectedPost">
+          <div>
             <h3>{post.title}</h3>
             <div>Description: {post.description}</div>
             <div>Price: {post.price}</div>
             <div>Posted by: {post.author.username}</div>
             <div>Location: {post.location} </div>
             <button
-              id="delete"
               onClick={() => {
                 deletePostHandler();
               }}
             >
               Delete
             </button>
-            <Link id="send-message" to={`/posts/edit/${post._id}`}>
-              <button id="edit">Edit</button>
-            </Link>
           </div>
         ) : (
           <div>
-            <div id="post-results">
-              <h3 id="post-title">{post.title}</h3>
+            <div>
+              <h3>{post.title}</h3>
               <div>Description: {post.description}</div>
               <div>Price: {post.price}</div>
               <div>Posted by: {post.author.username}</div>

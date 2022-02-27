@@ -6,9 +6,9 @@ import Messages from "./CreateMessage";
 const Profile = ({ user }) => {
   const [posts, setPosts] = useState([]);
 
-  // useEffect(()=> {
-  //   setPosts(user.posts);
-  // }, [user])
+ const userPosts = () => {
+   
+ }
 
   return (
     <>

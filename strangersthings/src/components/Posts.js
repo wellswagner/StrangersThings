@@ -7,19 +7,21 @@ const [searchTerm, setSearchTerm] = useState('')
 console.log(searchTerm) 
 
 
-// const fetchSearchResult = async () => {
-//   const resp = await fetch(`${API}/posts`);
-//   JSON.stringify(resp)
-//   console.log(resp)
-//   const searchResults = async (post, searchTerm) => {
-//     let filteredPosts = []
-//     if(resp.title.toLowerCase().includes(searchTerm)) console.log(resp)
-//     if(resp.description.toLowerCase().includes(searchTerm)) filteredPosts.push(resp)
-//     console.log(filteredPosts)
-//   }
-// } come back to this ***
+function postMatches(post, text) {
+  const {title, description, price, author: {username}, location}= post;
+  
+  if(title.toLowerCase().includes(text.toLowerCase()) || 
+  description.toLowerCase().includes(text.toLowerCase()) || 
+  price.toLowerCase().includes(text.toLowerCase()) || 
+  username.toLowerCase().includes(text.toLowerCase()) || 
+  location.toLowerCase().includes(text.toLowerCase())) {
+      return true;
+  }
+}
+  
+const filteredPosts = posts.filter(post => postMatches(post, searchTerm));
 
-
+const postsToDisplay = searchTerm.length ? filteredPosts : posts;
 
 
 
@@ -31,11 +33,14 @@ console.log(searchTerm)
         <h3>Search</h3>
         <input 
           value={searchTerm}
-          onChange = {(e) => fetchSearchResult()}
+          onChange = {(e) => {
+            e.preventDefault();
+            setSearchTerm(e.target.value);
+          postMatches()}}
           placeholder = "Search Posts..."
           />
       </form>
-      {posts.map((post) => (
+      {posts && postsToDisplay.map((post) => (
         <div key={post._id}>
           <h2>{post.title}</h2>
           <p>{post.description}</p>
