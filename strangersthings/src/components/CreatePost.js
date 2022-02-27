@@ -16,8 +16,8 @@ const CreatePost = ({ fetchPosts }) => {
       e.preventDefault();
       console.log(lsToken);
       if (lsToken) {
-        console.log("is it even hittin that stuff?");
-        const resp = await fetch(`${API})/posts`, {
+        console.log(lsToken);
+        const resp = await fetch(`${API}/posts`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -28,10 +28,11 @@ const CreatePost = ({ fetchPosts }) => {
               saleItem: saleItem,
               itemDesc: itemDesc,
               itemPrice: itemPrice,
-              itemLocation: itemLocation,
+              itemLocation: itemLocation
             },
           }),
-        }).then(res => res.json())
+        })
+
       }
       fetchPosts();
       history.push("./Posts");

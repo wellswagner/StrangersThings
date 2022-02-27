@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { API } from "./app";
 
-const CreateMessage = ({ posts }) => {
+const CreateMessage = ({ posts, fetchUser, fetchPosts }) => {
   const [message, setMessage] = useState("");
   const lsToken = localStorage.getItem("token");
 

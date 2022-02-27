@@ -30,12 +30,12 @@ const PostDetails = ({ posts, lsToken, fetchPosts }) => {
     <>
       <div id="post-results-box">
         {post && post.isAuthor ? (
-          <div id="post-results">
-            <h3 id="post-title">{post.title}</h3>
-            <div id="post-info">Description: {post.description}</div>
-            <div id="post-info">Price: {post.price}</div>
-            <div id="post-info">Posted by: {post.author.username}</div>
-            <div id="post-info">Location: {post.location} </div>
+          <div id="selectedPost">
+            <h3>{post.title}</h3>
+            <div>Description: {post.description}</div>
+            <div>Price: {post.price}</div>
+            <div>Posted by: {post.author.username}</div>
+            <div>Location: {post.location} </div>
             <button
               id="delete"
               onClick={() => {

@@ -23,9 +23,11 @@ const App = () => {
   const [error, setError] = useState("");
 
   async function fetchPosts() {
-    const resp = await fetch(`${API}/posts`);
+    const resp = await fetch(`${API}/posts`
+    );
     const info = await resp.json();
     setPosts(info.data.posts);
+    console.log("posts fetched")
   }
   // console.log(token, user, posts);
   const fetchUser = async () => {
@@ -60,7 +62,11 @@ const App = () => {
           </Route>
 
           <Route exact path="/Posts">
-            <Posts posts={posts} />
+            <Posts 
+            posts={posts}
+            setPosts={setPosts}
+            fetchPosts={fetchPosts}
+            />
           </Route>
 
           <Route exact path="/Register">
@@ -79,7 +85,7 @@ const App = () => {
           </Route>
 
           <Route exact path="/Profile">
-            <Profile fetchUser={fetchUser} setToken={setToken} />
+            <Profile fetchUser={fetchUser} setToken={setToken} fetchPosts={fetchPosts} />
           </Route>
 
           <Route exact path="/PostDetails">
